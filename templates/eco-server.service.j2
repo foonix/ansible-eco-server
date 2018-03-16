@@ -1,0 +1,11 @@
+# {{ ansible_managed }}
+
+[Unit]
+Description=ECO {{ service_name }}
+
+[Service]
+ExecStart=/usr/bin/mono {{ install_path }}/current/EcoServer.exe -nogui
+WorkingDirectory={{ install_path }}/current
+
+[Install]
+WantedBy=multi-user.target

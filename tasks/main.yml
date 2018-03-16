@@ -1,0 +1,42 @@
+---
+- name: Update mono repo
+  include_tasks: mono-repo.yml
+  when: mono_repo == true
+- name: Install package dependencies
+  package:
+    name: unzip,mono-complete
+    state: latest
+- name: ECO server user
+  user:
+    name: "{{ user }}"
+    system: yes
+    home: "{{ install_path }}"
+- name: Download ECO server {{ version }}
+  get_url:
+    url: "{{ server_download_url}}"
+    dest: "{{ server_install_archive }}"
+- name: Make archive unpack directory
+  file:
+    path: "{{ install_path }}/{{ version }}"
+    state: directory
+- name: Unpack ECO server
+  unarchive:
+    remote_src: true
+    src: "{{ server_install_archive }}"
+    dest: "{{ install_path }}/{{ version }}"
+- name: Set current symlink
+  file:
+    state: link
+    src: "{{ install_path }}/{{ version }}"
+    path: "{{ install_path }}/current"
+- name: Configure systemd service
+  template:
+    dest: "{{ install_path }}/{{ service_name }}.service"
+    src: "eco-server.service.j2"
+- name: Link systemd service
+  command: systemctl link {{ install_path }}/{{ service_name }}.service creates=/etc/systemd/system/{{ service_name }}.service
+- name: Start systemd service
+  service:
+    name: "{{ service_name }}"
+    state: started
+

@@ -1,0 +1,5 @@
+- apt_key:
+    keyserver: keyserver.ubuntu.com
+    id: 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
+- apt_repository:
+    repo: deb http://download.mono-project.com/repo/ubuntu stable-xenial main
