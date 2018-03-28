@@ -17,7 +17,7 @@ Role Variables
 
 Variable | Description | Default
 --- | --- | ---
-version | Version to install. | 0.7.2.5-beta
+version | Version to install. | 0.7.3.0-beta
 install_path | Base directory to install the server | /opt/eco
 service_name | Name of systemd service (use for multiple daemons) | eco-server
 mono_repo | Install the official mono apt repository for ubuntu | true
@@ -29,7 +29,7 @@ Example Playbook
 
     - hosts: servers
       roles:
-         - { role: foonix.eco-server, version: 0.7.2.5-beta }
+         - { role: foonix.eco-server, version: 0.7.3.0-beta }
 
 License
 -------
